@@ -1,0 +1,41 @@
+# 🔄 Actualizar la lista de paquetes
+sudo apt update
+
+# 🐍 Instalar Python 3, pip y OpenSSL (si no están ya instalados)
+sudo apt install python3 python3-pip openssl -y
+
+# 📦 Instalar soporte para entornos virtuales (venv)
+sudo apt install python3.12-venv -y
+
+# 📁 Crear una carpeta para el proyecto (opcional)
+mkdir flask-https-app
+cd flask-https-app
+
+# 🧪 Crear un entorno virtual llamado 'venv'
+python3 -m venv venv
+
+# 🟢 Activar el entorno virtual
+source venv/bin/activate
+
+# 🔧 Instalar Flask dentro del entorno virtual
+pip install Flask --break-system-packages
+
+# 🔐 Generar un certificado autofirmado con OpenSSL (válido por 1 año)
+openssl req -x509 -newkey rsa:4096 -keyout key.pem -out cert.pem -days 365 -nodes
+
+# 📄 Crear el archivo app.py (puede hacerse en VSCode o con un editor de texto)
+# El contenido debe ser:
+
+# from flask import Flask
+# app = Flask(__name__)
+# @app.route('/')
+# def index():
+#     return '✅ Conexión segura establecida con HTTPS'
+# if __name__ == '__main__':
+#     app.run(ssl_context=('cert.pem', 'key.pem'))
+
+# ▶️ Ejecutar la aplicación
+python3 app.py
+
+# 🌐 Ir a: https://localhost:5000 en tu navegador
+# (Ignorar advertencia del navegador por ser un certificado autofirmado)
